@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/vscode/devcontainers/java:17-bullseye
+FROM mcr.microsoft.com/devcontainers/java:17-bullseye
 
 RUN apt-get update && apt-get install -y gnupg lsb-release inetutils-tools \
   && wget https://dev.mysql.com/get/mysql-apt-config_0.8.29-1_all.deb \
