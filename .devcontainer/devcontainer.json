@@ -4,7 +4,7 @@
 	"name": "java-app-service-mysql-redis-infra",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
-	"workspaceFolder": "/workspace",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
 	"features": {
 		"ghcr.io/devcontainers/features/java:1": {
@@ -16,9 +16,7 @@
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [
-		8080, 3306
-	]
+	// "forwardPorts": [3306],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "java -version",

@@ -1,4 +1,4 @@
-version: "3"
+version: '3.8'
 
 volumes:
   mysql-data:
@@ -6,6 +6,7 @@ volumes:
 
 services:
   app:
+    container_name: javadev
     build:
       context: .
       dockerfile: Dockerfile
@@ -43,6 +44,7 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     environment: 
+      # NOTE: MYSQL_DATABASE/USER/PASSWORD should match values in app container
       MYSQL_DATABASE: app
       MYSQL_USER: app_user
       MYSQL_PASSWORD: app_password
