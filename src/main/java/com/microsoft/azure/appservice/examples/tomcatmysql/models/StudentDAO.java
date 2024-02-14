@@ -1,13 +1,20 @@
 package com.microsoft.azure.appservice.examples.tomcatmysql.models;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import jakarta.persistence.*;
 
 public class StudentDAO { 
 
     private static EntityManager getEntityManager() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("defaultpu");
+        Map<String, String> persistenceMap = new HashMap<String, String>();
+        persistenceMap.put("jakarta.persistence.jdbc.url", String.format("jdbc:mysql://%s:3306/%s", System.getenv("MYSQL_HOST"), System.getenv("MYSQL_DATABASE")));
+        persistenceMap.put("jakarta.persistence.jdbc.user", System.getenv("MYSQL_USER"));
+        persistenceMap.put("jakarta.persistence.jdbc.password", System.getenv("MYSQL_PASSWORD"));
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("defaultpu", persistenceMap);
         return emf.createEntityManager();
     }
     
