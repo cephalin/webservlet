@@ -1,0 +1,7 @@
+com/microsoft/azure/appservice/examples/tomcatmysql/DeleteServlet.class
+com/microsoft/azure/appservice/examples/tomcatmysql/ViewServlet.class
+com/microsoft/azure/appservice/examples/tomcatmysql/NewServlet.class
+com/microsoft/azure/appservice/examples/tomcatmysql/models/Student.class
+com/microsoft/azure/appservice/examples/tomcatmysql/models/StudentDAO.class
+com/microsoft/azure/appservice/examples/tomcatmysql/EditServlet.class
+com/microsoft/azure/appservice/examples/tomcatmysql/ContextListener.class

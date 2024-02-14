@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/vscode/devcontainers/java:17-bullseye
+
+RUN apt-get update && apt-get install -y gnupg lsb-release inetutils-tools \
+  && wget https://dev.mysql.com/get/mysql-apt-config_0.8.29-1_all.deb \
+  && DEBIAN_FRONTEND=noninteractive dpkg -i mysql-apt-config_0.8.29-1_all.deb \
+  && apt-get update \
+  && apt install -y mysql-client
+
+ENV MYSQL_HOST="db"
+ENV MYSQL_DATABASE="app"
+ENV MYSQL_USER="app_user"
+ENV MYSQL_PASSWORD="app_password"
