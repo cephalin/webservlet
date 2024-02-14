@@ -10,7 +10,12 @@ public class StudentDAO {
 
     private static EntityManager getEntityManager() {
         Map<String, String> persistenceMap = new HashMap<String, String>();
-        persistenceMap.put("jakarta.persistence.jdbc.url", String.format("jdbc:mysql://%s:3306/%s", System.getenv("MYSQL_HOST"), System.getenv("MYSQL_DATABASE")));
+        String databaseurl = System.getenv("AZURE_MYSQL_CONNECTIONSTRING");
+        if (databaseurl!=null) {
+            persistenceMap.put("jakarta.persistence.jdbc.url", databaseurl);
+        } else {
+            persistenceMap.put("jakarta.persistence.jdbc.url", String.format("jdbc:mysql://%s:3306/%s", System.getenv("MYSQL_HOST"), System.getenv("MYSQL_DATABASE")));
+        }
         persistenceMap.put("jakarta.persistence.jdbc.user", System.getenv("MYSQL_USER"));
         persistenceMap.put("jakarta.persistence.jdbc.password", System.getenv("MYSQL_PASSWORD"));
 
