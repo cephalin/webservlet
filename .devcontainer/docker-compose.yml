@@ -1,13 +1,23 @@
 version: "3"
 
+volumes:
+  mysql-data:
+  # tomcat-webapps-dir:
+
 services:
   app:
     build:
-      context: ..
-      dockerfile: .devcontainer/Dockerfile
+      context: .
+      dockerfile: Dockerfile
+    environment: 
+      # NOTE: MYSQL_DATABASE/USER/PASSWORD should match values in db container
+      MYSQL_HOST: mysqldb
+      MYSQL_DATABASE: app
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: app_password
 
     volumes:
-      - ..:/workspace:cached
+      - ../..:/workspaces:cached
       # - tomcat-webapps-dir:/usr/local/tomcat/webapps
 
     # Overrides default command so things don't shut down after the process ends.
@@ -15,6 +25,9 @@ services:
 
     # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
     network_mode: service:db
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
 
   # web:
   #   depends_on:
@@ -24,14 +37,15 @@ services:
   #     - tomcat-webapps-dir:/usr/local/tomcat/webapps
 
   db:
+    container_name: mysqldb
     image: mysql:8.3
     restart: unless-stopped
+    volumes:
+      - mysql-data:/var/lib/mysql
     environment: 
       MYSQL_DATABASE: app
       MYSQL_USER: app_user
       MYSQL_PASSWORD: app_password
-    # volumes:
-    #   - mysql-files:/var/lib/mysql
 
     # Add "forwardPorts": ["3306"] to **devcontainer.json** to forward MySQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
@@ -39,7 +53,3 @@ services:
   redis:
     image: redis
     restart: unless-stopped
-
-# volumes:
-  # mysql-files:
-  # tomcat-webapps-dir:

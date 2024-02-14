@@ -15,29 +15,6 @@
 		"ghcr.io/azure/azure-dev/azd:latest": {}
 	},
 
-	"customizations": {
-		"vscode": {
-			// Add the IDs of extensions you want installed when the container is created.
-			"extensions": [
-				"mtxr.sqltools",
-				"mtxr.sqltools-driver-mysql"
-			],
-			"settings": {
-				"sqltools.connections": [
-					{
-						"name": "Container database",
-						"driver": "MySQL",
-						"previewLimit": 50,
-						"server": "localhost",
-						"port": 3306,
-						"database": "app",
-						"username": "app_user",
-						"password": "app_password"
-					}
-				]
-			}
-		}
-	},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [
 		8080, 3306
