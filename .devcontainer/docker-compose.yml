@@ -2,7 +2,6 @@ version: '3.8'
 
 volumes:
   mysql-data:
-  # tomcat-webapps-dir:
 
 services:
   app:
@@ -11,15 +10,13 @@ services:
       context: .
       dockerfile: Dockerfile
     environment: 
-      # NOTE: MYSQL_DATABASE/USER/PASSWORD should match values in db container
-      MYSQL_HOST: mysqldb
-      MYSQL_DATABASE: app
-      MYSQL_USER: app_user
-      MYSQL_PASSWORD: app_password
+      # NOTE: MYSQL_HOST/DATABASE/USER/PASSWORD should match values in db container
+      MYSQL_URL: jdbc:mysql://${ENV_DB_HOST}:3306/${ENV_DB_DATABASE}
+      MYSQL_USER: ${ENV_DB_USER}
+      MYSQL_PASSWORD: ${ENV_DB_PASSWORD}
 
     volumes:
       - ../..:/workspaces:cached
-      # - tomcat-webapps-dir:/usr/local/tomcat/webapps
 
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
@@ -30,25 +27,18 @@ services:
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
-  # web:
-  #   depends_on:
-  #     - db
-  #   image: tomcat
-  #   volumes:
-  #     - tomcat-webapps-dir:/usr/local/tomcat/webapps
-
   db:
-    container_name: mysqldb
+    container_name: ${ENV_DB_HOST}
     image: mysql:8.3
     restart: unless-stopped
     volumes:
       - mysql-data:/var/lib/mysql
     environment: 
-      # NOTE: MYSQL_DATABASE/USER/PASSWORD should match values in app container
-      MYSQL_DATABASE: app
-      MYSQL_USER: app_user
-      MYSQL_PASSWORD: app_password
-      MYSQL_ROOT_PASSWORD: example
+      # NOTE: MYSQL_HOST/DATABASE/USER/PASSWORD should match values in app container
+      MYSQL_DATABASE: ${ENV_DB_DATABASE}
+      MYSQL_USER: ${ENV_DB_USER}
+      MYSQL_PASSWORD: ${ENV_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${ENV_DB_ROOT_PASSWORD}
 
     # Add "forwardPorts": ["3306"] to **devcontainer.json** to forward MySQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
